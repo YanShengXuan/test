@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+
+<html lang="zh-TW">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>吉卜力角色人格測驗</title>
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+
+        
+
+        body {
+
+            font-family: 'Noto Sans TC', sans-serif;
+
+            background-color: #f0f7e9;
+
+            margin: 0;
+
+            padding: 0;
+
+            color: #5a4a42;
+
+            line-height: 1.6;
+
+        }
+
+        
+
+        .container {
+
+            max-width: 800px;
+
+            margin: 0 auto;
+
+            padding: 20px;
+
+            background-color: #ffffff;
+
+            border-radius: 15px;
+
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+
+            margin-top: 20px;
+
+            margin-bottom: 20px;
+
+        }
+
+        
+
+        h1 {
+
+            text-align: center;
+
+            color: #5a4a42;
+
+            margin-bottom: 30px;
+
+            font-size: 28px;
+
+        }
+
+        
+
+        .start-screen, .question-screen, .result-screen {
+
+            text-align: center;
+
+        }
+
+        
+
+        .question-screen, .result-screen {
+
+            display: none;
+
+        }
+
+        
+
+        .start-btn, .choice-btn, .restart-btn {
+
+            background-color: #7bb661;
+
+            color: white;
+
+            border: none;
+
+            padding: 12px 24px;
+
+            margin: 10px;
+
+            border-radius: 30px;
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            transition: background-color 0.3s;
+
+            font-family: 'Noto Sans TC', sans-serif;
+
+        }
+
+        
+
+        .start-btn:hover, .choice-btn:hover, .restart-btn:hover {
+
+            background-color: #5a9143;
+
+        }
+
+        
+
+        .progress-bar {
+
+            height: 10px;
+
+            background-color: #e0e0e0;
+
+            border-radius: 5px;
+
+            margin: 20px 0;
+
+            overflow: hidden;
+
+        }
+
+        
+
+        .progress {
+
+            height: 100%;
+
+            background-color: #7bb661;
+
+            width: 0%;
+
+            transition: width 0.5s;
+
+        }
+
+        
+
+        .choices {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+        
+
+        .result {
+
+            margin-top: 20px;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            background-color: #f9f7e8;
+
+        }
+
+        
+
+        .character-image {
+
+            width: 200px;
+
+            height: 200px;
+
+            margin: 0 auto;
+
+            background-size: contain;
+
+            background-repeat: no-repeat;
+
+            background-position: center;
+
+            border-radius: 10px;
+
+        }
+
+        
+
+        .totoro {
+
+            background-color: #e8f5e9;
+
+            border: 2px solid #81c784;
+
+        }
+
+        
+
+        .howl {
+
+            background-color: #fff6d6;
+
+            border: 2px solid #ffd966;
+
+        }
+
+        
+
+        .mononoke {
+
+            background-color: #e8f5e9;
+
+            border: 2px solid #81c784;
+
+        }
+
+        
+
+        .sophie {
+
+            background-color: #e3f2fd;
+
+            border: 2px solid #64b5f6;
+
+        }
+
+        
+
+        .scenario-image {
+
+            width: 300px;
+
+            height: 200px;
+
+            margin: 0 auto;
+
+            background-color: #f9f7e8;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background-size: contain;
+
+            background-repeat: no-repeat;
+
+            background-position: center;
+
+        }
+
+        
+
+        @media (max-width: 600px) {
+
+            .container {
+
+                padding: 15px;
+
+                margin-top: 10px;
+
+                margin-bottom: 10px;
+
+            }
+
+            
+
+            h1 {
+
+                font-size: 24px;
+
+            }
+
+            
+
+            .scenario-image {
+
+                width: 250px;
+
+                height: 150px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>吉卜力風格角色人格測驗</h1>
+
+        
+
+        <div class="start-screen">
+
+            <p>歡迎來到吉卜力角色人格測驗！透過回答10個情境問題，了解你最像哪個吉卜力角色。</p>
+
+            <p>是溫柔友善的龍貓？自由不羈的哈爾？堅強勇敢的小狼女？還是溫柔堅定的蘇菲？</p>
+
+            <button class="start-btn">開始測驗</button>
+
+        </div>
+
+        
+
+        <div class="question-screen">
+
+            <div class="progress-bar">
+
+                <div class="progress"></div>
+
+            </div>
+
+            <p class="question-number">問題 1/10</p>
+
+            <div class="scenario-image"></div>
+
+            <p class="question-text">問題文字將顯示在這裡</p>
+
+            <div class="choices">
+
+                <button class="choice-btn" data-choice="A"></button>
+
+                <button class="choice-btn" data-choice="B"></button>
+
+            </div>
+
+        </div>
+
+        
+
+        <div class="result-screen">
+
+            <h2>你最像的吉卜力角色是：</h2>
+
+            <div class="result">
+
+                <h3 class="character-type"></h3>
+
+                <div class="character-image"></div>
+
+                <p class="character-description"></p>
+
+            </div>
+
+            <button class="restart-btn">重新測驗</button>
+
+        </div>
+
+    </div>
+
+    
+
+    <script>
+
+        // 問題和選項
+
+        const questions = [
+
+            {
+
+                question: "在一個陽光明媚的早晨，你會選擇：",
+
+                image: "https://cdn.pixabay.com/photo/2017/05/08/06/00/sunrise-2294255_960_720.jpg",
+
+                choices: {
+
+                    A: "在家裡喝杯茶，看看書或發呆",
+
+                    B: "出門散步，享受大自然"
+
+                }
+
+            },
+
+            {
+
+                question: "面對一個難題時，你通常會：",
+
+                image: "https://cdn.pixabay.com/photo/2017/06/17/10/28/rubik-2411953_960_720.jpg",
+
+                choices: {
+
+                    A: "先思考所有可能的解決方案",
+
+                    B: "跟隨直覺，立即行動"
+
+                }
+
+            },
+
+            {
+
+                question: "你更喜歡哪種電影？",
+
+                image: "https://cdn.pixabay.com/photo/2016/03/31/15/26/cinema-1293491_960_720.jpg",
+
+                choices: {
+
+                    A: "情感豐富、充滿人生哲理的劇情片",
+
+                    B: "刺激冒險、節奏明快的動作片"
+
+                }
+
+            },
+
+            {
+
+                question: "假日時，你更傾向：",
+
+                image: "https://cdn.pixabay.com/photo/2015/06/07/15/25/calendar-800143_960_720.jpg",
+
+                choices: {
+
+                    A: "計劃一個精心安排的行程",
+
+                    B: "隨性而為，隨遇而安"
+
+                }
+
+            },
+
+            {
+
+                question: "在朋友聚會中，你通常：",
+
+                image: "https://cdn.pixabay.com/photo/2015/07/02/10/44/friends-828897_960_720.jpg",
+
+                choices: {
+
+                    A: "喜歡專注地與幾個人深度交流",
+
+                    B: "喜歡認識新朋友，四處交談"
+
+                }
+
+            },
+
+            {
+
+                question: "面對變化，你的態度是：",
+
+                image: "https://cdn.pixabay.com/photo/2016/03/24/00/29/universe-1275924_960_720.jpg",
+
+                choices: {
+
+                    A: "小心謹慎，喜歡穩定",
+
+                    B: "擁抱變化，享受新鮮感"
+
+                }
+
+            },
+
+            {
+
+                question: "當你需要做決定時，你會：",
+
+                image: "https://cdn.pixabay.com/photo/2017/08/27/16/07/crossroads-2686278_960_720.jpg",
+
+                choices: {
+
+                    A: "考慮所有可能的後果",
+
+                    B: "相信自己的直覺"
+
+                }
+
+            },
+
+            {
+
+                question: "在家裡，你的空間通常是：",
+
+                image: "https://cdn.pixabay.com/photo/2016/11/29/04/52/architecture-1867426_960_720.jpg",
+
+                choices: {
+
+                    A: "井然有序，一切都有自己的位置",
+
+                    B: "舒適自然，有創意的混亂"
+
+                }
+
+            },
+
+            {
+
+                question: "當你遇到挫折時，你會：",
+
+                image: "https://cdn.pixabay.com/photo/2017/07/30/16/34/upset-2555070_960_720.jpg",
+
+                choices: {
+
+                    A: "深入分析問題，尋找解決方案",
+
+                    B: "給自己一些空間，然後重新開始"
+
+                }
+
+            },
+
+            {
+
+                question: "你更喜歡的工作環境是：",
+
+                image: "https://cdn.pixabay.com/photo/2017/07/31/11/21/people-2557399_960_720.jpg",
+
+                choices: {
+
+                    A: "結構化的環境，有明確的規則和目標",
+
+                    B: "靈活的環境，可以自由發揮創意"
+
+                }
+
+            }
+
+        ];
+
+        
+
+        // 結果定義
+
+        const results = {
+
+            totoro: {
+
+                type: "龍貓",
+
+                description: "你是一個溫暖、隨和的人，就像《龍貓》中的龍貓一樣。你善良、和藹，喜歡和朋友分享快樂。你擁有強大的治愈能力，能夠在他人困難時提供支持。你欣賞生活中的簡單美好，並能在自然中找到平靜。你的存在讓人感到安心，但也有神秘的一面。",
+
+                image: "https://cdn.pixabay.com/photo/2019/10/23/10/52/plush-4570638_960_720.jpg"
+
+            },
+
+            howl: {
+
+                type: "哈爾",
+
+                description: "你充滿魅力、自由不羈，就像《霍爾的移動城堡》中的哈爾。你擁有強烈的個性和獨特的魅力，容易成為人群中的焦點。你充滿創造力，喜歡追求自由和冒險。雖然有時看似任性，但你內心有著強烈的正義感和保護欲。你不喜歡被規則束縛，追求自己的生活方式。",
+
+                image: "https://cdn.pixabay.com/photo/2017/07/01/20/12/castle-2462925_960_720.jpg"
+
+            },
+
+            mononoke: {
+
+                type: "小狼女",
+
+                description: "你堅強、勇敢、有原則，如同《魔法公主》中的小狼女。你有強烈的保護意識，為你所珍視的人事物而戰。你直接、誠實，不喜歡虛偽和妥協。你與自然有著緊密的連結，珍視生命和自然的平衡。你獨立、堅定，面對挑戰時從不退縮。",
+
+                image: "https://cdn.pixabay.com/photo/2021/05/30/10/44/wolf-6294805_960_720.jpg"
+
+            },
+
+            sophie: {
+
+                type: "蘇菲",
+
+                description: "你溫柔、堅定、富有同理心，像《霍爾的移動城堡》中的蘇菲。你看重內在的價值而非外表，能夠在他人身上發現隱藏的美好。你有著超乎想像的堅韌和勇氣，能夠在困難時保持冷靜。你善於關懷他人，能夠看到事物的本質。你的溫暖和智慧讓你成為他人的支柱。",
+
+                image: "https://cdn.pixabay.com/photo/2016/11/29/03/32/woman-1867087_960_720.jpg"
+
+            }
+
+        };
+
+        
+
+        // 遊戲狀態
+
+        let currentQuestion = 0;
+
+        let answers = {
+
+            A: 0,
+
+            B: 0
+
+        };
+
+        
+
+        // DOM元素
+
+        const startScreen = document.querySelector('.start-screen');
+
+        const questionScreen = document.querySelector('.question-screen');
+
+        const resultScreen = document.querySelector('.result-screen');
+
+        const startBtn = document.querySelector('.start-btn');
+
+        const choiceBtns = document.querySelectorAll('.choice-btn');
+
+        const restartBtn = document.querySelector('.restart-btn');
+
+        const questionNumber = document.querySelector('.question-number');
+
+        const questionText = document.querySelector('.question-text');
+
+        const progressBar = document.querySelector('.progress');
+
+        const scenarioImage = document.querySelector('.scenario-image');
+
+        
+
+        // 開始遊戲
+
+        startBtn.addEventListener('click', startGame);
+
+        
+
+        // 重新開始
+
+        restartBtn.addEventListener('click', function() {
+
+            resultScreen.style.display = 'none';
+
+            startScreen.style.display = 'block';
+
+            resetGame();
+
+        });
+
+        
+
+        // 選擇答案
+
+        choiceBtns.forEach(btn => {
+
+            btn.addEventListener('click', function() {
+
+                const choice = this.getAttribute('data-choice');
+
+                answers[choice]++;
+
+                nextQuestion();
+
+            });
+
+        });
+
+        
+
+        function startGame() {
+
+            startScreen.style.display = 'none';
+
+            questionScreen.style.display = 'block';
+
+            loadQuestion();
+
+        }
+
+        
+
+        function resetGame() {
+
+            currentQuestion = 0;
+
+            answers = { A: 0, B: 0 };
+
+        }
+
+        
+
+        function loadQuestion() {
+
+            const question = questions[currentQuestion];
+
+            questionNumber.textContent = `問題 ${currentQuestion + 1}/10`;
+
+            questionText.textContent = question.question;
+
+            scenarioImage.style.backgroundImage = `url(${question.image})`;
+
+            
+
+            choiceBtns[0].textContent = question.choices.A;
+
+            choiceBtns[1].textContent = question.choices.B;
+
+            
+
+            // 更新進度條
+
+            progressBar.style.width = `${(currentQuestion / questions.length) * 100}%`;
+
+        }
+
+        
+
+        function nextQuestion() {
+
+            currentQuestion++;
+
+            
+
+            if (currentQuestion < questions.length) {
+
+                loadQuestion();
+
+            } else {
+
+                showResult();
+
+            }
+
+        }
+
+        
+
+        function showResult() {
+
+            questionScreen.style.display = 'none';
+
+            resultScreen.style.display = 'block';
+
+            
+
+            // 計算結果
+
+            const result = calculateResult();
+
+            
+
+            // 更新結果畫面
+
+            const characterType = document.querySelector('.character-type');
+
+            const characterImage = document.querySelector('.character-image');
+
+            const characterDescription = document.querySelector('.character-description');
+
+            const resultDiv = document.querySelector('.result');
+
+            
+
+            characterType.textContent = results[result].type;
+
+            characterImage.style.backgroundImage = `url(${results[result].image})`;
+
+            characterDescription.textContent = results[result].description;
+
+            
+
+            // 設置結果樣式
+
+            resultDiv.className = 'result ' + result;
+
+        }
+
+        
+
+        function calculateResult() {
+
+            // 簡單的結果計算邏輯
+
+            if (answers.A >= 7) {
+
+                return 'sophie'; // 多A，偏向謹慎、思考型
+
+            } else if (answers.B >= 7) {
+
+                return 'howl'; // 多B，偏向活躍、直覺型
+
+            } else if (answers.A > answers.B) {
+
+                return 'mononoke'; // 略多A，偏向堅定、原則型
+
+            } else {
+
+                return 'totoro'; // 略多B或平手，偏向溫和、平衡型
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
